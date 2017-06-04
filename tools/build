@@ -1,0 +1,11 @@
+#!/usr/bin/env ash
+eval `ssh-agent -s` && ssh-add /ssh/id_rsa > /dev/null
+
+mkdir -p ~/.ssh && cp /ssh/config ~/.ssh/ && chown $(whoami) ~/.ssh/config && chmod 644 ~/.ssh/config || true
+
+echo Cloning $REPO
+git clone $REPO /__build__
+cd /__build__
+
+docker build --no-cache=true -t $TAG:$(version /__build__/package.json) -f Dockerfile . || true
+build-result /builds/build-$BUILD_ID.json $TAG:$(version /__build__/package.json)

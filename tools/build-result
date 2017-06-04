@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+/*
+ * File         :   build-result.js
+ * Description  :   Write out the build result to file
+ * -------------------------------------------------------------------------------------------------------------------------------------- */
+const fs = require('fs');
+const [, , outputFile, buildTag] = process.argv;
+
+if (!outputFile || !buildTag) {
+  console.error(`Usage: build-result <output-file> <build-tag>`);
+}
+
+fs.writeFileSync(outputFile, JSON.stringify({
+  timestamp: new Date().toISOString(),
+  tag: buildTag
+}), 'utf8');

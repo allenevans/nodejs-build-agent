@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+/*
+ * File         :   version.js
+ * Description  :   Read the version information from package.json.
+ * -------------------------------------------------------------------------------------------------------------------------------------- */
+const packageJson = process.argv[2] || './package.json';
+
+try {
+  process.stdout.write(require(packageJson).version);
+} catch (x) {
+  process.stderr.write(x.message);
+  process.exit(1);
+}
